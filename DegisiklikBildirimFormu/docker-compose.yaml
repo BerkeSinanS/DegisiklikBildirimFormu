@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  web:
+    image: projeadi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - localhost
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Username=Berke;Password=BS1603;Database=Degisiklik_Formu
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: BS1603
+      POSTGRES_USER: Berke
+      POSTGRES_DB: Degisiklik_Formu
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
